@@ -1,0 +1,44 @@
+#Backend Dependencies
+# FastAPI & Web Framework
+fastapi
+uvicorn
+
+# AI Model & NLP
+transformers
+torch
+ollama
+langchain
+sentence-transformers
+
+# Database & ORM
+sqlalchemy
+pymysql  # Use this for MySQL
+psycopg2  # Use this for PostgreSQL
+alembic  # Migrations
+
+# Authentication & Security
+bcrypt
+python-jose
+passlib
+python-dotenv
+
+# Voice Support (Speech-to-Text & Text-to-Speech)
+openai-whisper  # Speech-to-text
+#TTS  # Text-to-speech
+
+# Image Handling
+opencv-python
+pillow
+
+# Real-Time WebSockets
+websockets
+starlette
+
+# Analytics & Logging
+pandas
+matplotlib
+superset  # Admin analytics dashboard
+
+# Testing
+pytest
+httpx

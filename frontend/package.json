@@ -1,0 +1,16 @@
+{
+  "name": "business-chatbot",
+  "version": "1.0.0",
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "axios": "^1.4.0",
+    "socket.io-client": "^4.0.0",
+    "chart.js": "^3.7.1",
+    "bootstrap": "^5.2.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build"
+  }
+}
