@@ -1,13 +1,17 @@
-import ollama
 import logging
+import ollama
 
-def test_generate_response(prompt):
+def generate_response(prompt):
     try:
-        response = ollama.chat(model="llama2", messages=[{"role": "user", "content": prompt}])
-        print(response["message"])
+        response = ollama.chat(
+            model="llama2", 
+            messages=[{"role": "user", "content": prompt}]
+        )
+        
+        if not response or "message" not in response:
+            raise ValueError("Invalid response from AI model")
+            
+        return response["message"]["content"]
     except Exception as e:
         logging.error(f"Error generating response: {str(e)}")
-        print(f"Error generating response: {str(e)}")
-
-if __name__ == "__main__":
-    test_generate_response("Hello chatbot!")
+        return f"Error: {str(e)}"

@@ -1,31 +1,37 @@
-import os
-import logging
 from fastapi import FastAPI
-from routes import chat, admin, analytics, auth
-from database import create_db_and_tables
 from fastapi.middleware.cors import CORSMiddleware
+from database import engine
+from models import Base
+from routes import chat, admin
+import asyncio
 
-logging.basicConfig(level=logging.INFO)
-
-app = FastAPI()
-
-# CORS settings
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+# Create FastAPI app with minimal settings
+app = FastAPI(
+    title="Restaurant AI Chat",
+    docs_url=None,  # Disable Swagger UI for faster startup
+    redoc_url=None  # Disable ReDoc for faster startup
 )
 
-# Initialize database tables
-create_db_and_tables()
+# Optimize CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_methods=["POST"],  # Limit to only needed methods
+    allow_headers=["*"],
+    max_age=86400,  # Cache preflight requests for 24 hours
+)
 
-# Include API routes
-app.include_router(chat.router, prefix="/chat", tags=["Chatbot"])
-app.include_router(admin.router, prefix="/admin", tags=["Admin"])
-app.include_router(analytics.router, prefix="/analytics", tags=["Analytics"])
-app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
+# Lazy database initialization
+async def init_db():
+    Base.metadata.create_all(bind=engine)
+
+@app.on_event("startup")
+async def startup_event():
+    asyncio.create_task(init_db())  # Non-blocking DB initialization
+
+# Include only necessary routes
+app.include_router(chat.router, prefix="/chat")
+app.include_router(admin.router, prefix="/admin")
 
 @app.get("/")
 def home():

@@ -1,0 +1,68 @@
+{
+    "info": {
+        "name": "Ollama API Tests",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "List Models",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:11434/api/tags",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "11434",
+                    "path": ["api", "tags"]
+                }
+            }
+        },
+        {
+            "name": "Chat Completion",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"model\": \"mistral\",\n    \"messages\": [\n        {\n            \"role\": \"system\",\n            \"content\": \"You are a restaurant assistant. Help customers with menu, reservations, and orders.\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"What's on the menu today?\"\n        }\n    ]\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:11434/api/chat",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "11434",
+                    "path": ["api", "chat"]
+                }
+            }
+        },
+        {
+            "name": "Model Info",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"mistral\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:11434/api/show",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "11434",
+                    "path": ["api", "show"]
+                }
+            }
+        }
+    ]
+}
